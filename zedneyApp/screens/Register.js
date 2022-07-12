@@ -23,7 +23,7 @@ export default function Register({navigation}) {
     const userData = {name:name,email:email,motDePasse:motDePasse}
     setIsLoading(true);
     axios
-      .post(`http://192.168.1.64:4200/register`, userData)
+      .post(`http://192.168.1.22:4200/register`, userData)
       .then((response)=>{
         console.log("response.data",response.data);
         navigation.navigate("Login")

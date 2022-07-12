@@ -8,9 +8,24 @@ import {
   Dimensions,
 } from 'react-native';
 import {LineChart} from 'react-native-chart-kit';
+import axios from 'axios';
 export default function FirstPage() {
   const [isLoading, setLoading] = useState(false);
   const [data, setData] = useState([]);
+
+  // const getFacture = () => {
+  //   axios
+  //     .get(
+  //       'https://zc-group.bitrix24.com/rest/31/iq51kc1s03elmphp/lists.element.get.json?IBLOCK_TYPE_ID=lists&IBLOCK_ID=35',
+  //     )
+  //     .then(response => {
+  //       console.log(response.data);
+  //     })
+  //     .catch(e => {
+  //       console.error(e);
+  //     });
+  // };
+ 
   const getFacture = async () => {
     try {
       const response = await fetch(
@@ -20,39 +35,28 @@ export default function FirstPage() {
       setData(json.result);
     } catch (error) {
       console.error(error);
-    } finally {
-      setLoading(false);
     }
   };
   useEffect(() => {
     getFacture();
-    // console.log("<;>",data);
-  }, []);
+   console.log("<==>",displayPrice());
+ }, []);
 
   const displayName = () => data.map(item => item.NAME);
-
+  
   const displayPrice = () => {
     let array = data.map(item => item.PROPERTY_139);
-    let x = []; // x returns ["250|EUR", "400|EUR", "550|EUR", "700|EUR"]
-    let y = []; // y returns [["250", ""], ["400", ""], ["550", ""], ["700", ""]]
-    let z = []; // z returns ["250", "400", "550", "700"]
+    let x =[]
     for (let i = 0; i < array.length; i++) {
-      x.push(Object.values(array[i])[0]);
+      x.push(Object.values(array[i])[0].replace(/\D/g, ''));//i took the replace from a blog in bobbyhadz.com
     }
-
-    for (let o = 0; o < x.length; o++) {
-      y.push(x[o].split('|EUR'));
-    }
-    for (let w = 0; w < y.length; w++) {
-      z.push(y[w][0]);
-    }
-    return z;
+    return x;
   };
-
+  
+ 
   return (
     <>
-      {/* <ImageBackground style={styles.ImageBackground} source={require('../assets/pixeltrue-icons-receipt-1.png')}> */}
-      <StatusBar backgroundColor="#2A558C" barStyle="dark-content" />
+     <StatusBar backgroundColor="#2A558C" barStyle="dark-content" />
       <View style={styles.body}>
         <View /*colors={['#057894', '#2490c2']}*/ style={styles.topSection}>
           <Text
@@ -81,12 +85,12 @@ export default function FirstPage() {
           <View style={styles.lineChart}>
             <LineChart
               data={{
-                // labels:['a', 'b', 'c', 'd','e'],
-                labels:displayName(),
+                labels: ['a', 'b', 'c', 'd', 'e'],
+                // labels:displayName(),
                 datasets: [
                   {
-                    data: displayPrice(),
-                    // data: [250, 300, 120, 400,265],
+                    // data: displayPrice(),
+                    data: [250, 300, 120, 400, 265],
                   },
                 ],
               }}

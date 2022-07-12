@@ -11,39 +11,76 @@ import {
 } from 'react-native';
 import {PieChart, LineChart} from 'react-native-chart-kit';
 import SwitchSelector from 'react-native-switch-selector';
-import {SafeAreaView} from 'react-native-safe-area-context';
+import axios from 'axios';
 export default function SecondPage() {
-  const [isLoading, setLoading] = useState(false);
   const [data, setData] = useState([]);
   const [showHideC1, setShowHideC1] = useState(false);
   const [showHideC2, setShowHideC2] = useState(false);
+
+  const filter_regleé_facture_for_CO_1 = () => {
+    //the functions for the pie chart
+    return data.filter(CO_1 => {
+      return (
+        Object.values(CO_1.PROPERTY_151)[0] === 'CO_1' &&
+        Object.values(CO_1.PROPERTY_153)[0] === '179'
+      );
+    }).length;
+  };
+  const filter_non_regleé_facture_for_CO_1 = () => {
+    //the functions for the pie chart
+    return data.filter(CO_1 => {
+      return (
+        Object.values(CO_1.PROPERTY_151)[0] === 'CO_1' &&
+        Object.values(CO_1.PROPERTY_153)[0] === '177'
+      );
+    }).length;
+  };
   const IZIWEBPie = [
     {
       name: 'Réglée',
-      etat: 1,
+      etat: filter_regleé_facture_for_CO_1(),
       color: '#4973F2',
       legendFontColor: '#7F7F7F',
       legendFontSize: 15,
     },
     {
       name: 'non Réglée',
-      etat: 2,
+      etat: filter_non_regleé_facture_for_CO_1(),
       color: '#F2911B',
       legendFontColor: '#7F7F7F',
       legendFontSize: 15,
     },
   ];
+
+  const filter_regleé_facture_for_C_5 = () => {
+    //the functions for the pie chart
+    return data.filter(C_5 => {
+      return (
+        Object.values(C_5.PROPERTY_151)[0] === 'C_5' &&
+        Object.values(C_5.PROPERTY_153)[0] === '179'
+      );
+    }).length;
+  };
+  const filter_non_regleé_facture_for_C_5 = () => {
+    //the functions for the pie chart
+    return data.filter(C_5 => {
+      return (
+        Object.values(C_5.PROPERTY_151)[0] === 'C_5' &&
+        Object.values(C_5.PROPERTY_153)[0] === '177'
+      );
+    }).length;
+  };
   const MAGHROUM_H = [
     {
       name: 'Réglée',
-      etat: 1,
+      etat: filter_regleé_facture_for_C_5(),
       color: '#4973F2',
       legendFontColor: '#7F7F7F',
       legendFontSize: 15,
     },
     {
       name: 'non Réglée',
-      etat: 1,
+      etat: filter_non_regleé_facture_for_C_5(),
       color: '#F2911B',
       legendFontColor: '#7F7F7F',
       legendFontSize: 15,
@@ -58,43 +95,53 @@ export default function SecondPage() {
       setData(json.result);
     } catch (error) {
       console.error(error);
-    } finally {
-      setLoading(false);
     }
   };
   useEffect(() => {
     getFacture();
-    console.log('<<===>>', filter_non_regleé_facture_for_first_client());
+    console.log('<<===>>', display_facture_price_CO_1());
   }, []);
 
-  // const displayEtat = () => {
-  //   let array = data.map(item => item.PROPERTY_151);
-  //   let x = [];
-  //   for (let i = 0; i < array.length; i++) {
-  //     x.push(Object.values(array[i])[0]);
-  //   }
-  //   return x;
-
-  const filter_facture_for_first_client = () => {
-    //PROPERTY_151 for the client name
-    //PROPERTY_153 for the etat
-    return data.filter(clientF => {
-      return Object.values(clientF.PROPERTY_151)[0] === 'CO_1';
-    });
+  const display_facture_name_CO_1 = () => {
+    // function for facture name for line chart
+    return data
+      .filter(CO_1_name => {
+        return Object.values(CO_1_name.PROPERTY_151)[0] === 'CO_1';
+      })
+      .map(CO_1_name => {
+        return CO_1_name.NAME;
+      });
   };
-
-  
-  const filter_non_regleé_facture_for_first_client = () => {
-   return data
-   .filter(etatF => {
-     return (
-       Object.values(etatF.PROPERTY_151)[0] === 'CO_1' &&
-       Object.values(etatF.PROPERTY_153)[0] === '177'
-     );
-     
-   }).length
+  const display_facture_price_CO_1 = () => {
+    // function for facture price for line chart
+    return data
+      .filter(CO_1_price => {
+        return Object.values(CO_1_price.PROPERTY_151)[0] === 'CO_1';
+      })
+      .map(CO_1_price => {
+        return Object.values(CO_1_price.PROPERTY_139)[0].replace(/\D/g, ''); //i took the replace from a blog in bobbyhadz.com
+      });
   };
-
+  const display_facture_name_C_5 = () => {
+    // function for facture name for line chart
+    return data
+      .filter(C_5_name => {
+        return Object.values(C_5_name.PROPERTY_151)[0] === 'C_5';
+      })
+      .map(C_5_name => {
+        return C_5_name.NAME;
+      });
+  };
+  const display_facture_price_C_5 = () => {
+    // function for facture price for line chart
+    return data
+      .filter(C_5_price => {
+        return Object.values(C_5_price.PROPERTY_151)[0] === 'C_5';
+      })
+      .map(C_5_price => {
+        return Object.values(C_5_price.PROPERTY_139)[0].replace(/\D/g, ''); //i took the replace from a blog in bobbyhadz.com
+      });
+  };
   return (
     <>
       <StatusBar backgroundColor="#2A558C" barStyle="dark-content" />
@@ -186,14 +233,16 @@ export default function SecondPage() {
                 <View style={styles.lineChart}>
                   <LineChart
                     data={{
-                      labels: [
-                        'Facture test 1',
-                        'Facture test 2',
-                        'Facture test 3',
-                      ],
+                      // labels: [
+                      //   'Facture test 1',
+                      //   'Facture test 2',
+                      //   'Facture test 3',
+                      // ],
+                      labels: display_facture_name_CO_1(),
                       datasets: [
                         {
-                          data: [250, 400, 550],
+                          // data: [250, 400, 550],
+                          data: display_facture_price_CO_1(),
                         },
                       ],
                     }}
@@ -219,7 +268,7 @@ export default function SecondPage() {
                         stroke: '#ffa726',
                       },
                     }}
-                    // bezier
+                    bezier
                     style={{
                       marginVertical: 8,
                       borderRadius: 16,
@@ -260,7 +309,7 @@ export default function SecondPage() {
             </View>
             <View>
               {showHideC2 !== true ? (
-                <View style={styles.pie}>
+                <View style={styles.pie2}>
                   <PieChart
                     data={MAGHROUM_H}
                     width={Dimensions.get('window').width}
@@ -285,13 +334,15 @@ export default function SecondPage() {
                   />
                 </View>
               ) : (
-                <View style={styles.lineChart}>
+                <View style={styles.lineChart2}>
                   <LineChart
                     data={{
-                      labels: ['Facture test 4', 'Facture test 5'],
+                      // labels: ['Facture test 4', 'Facture test 5'],
+                      labels: display_facture_name_C_5(),
                       datasets: [
                         {
-                          data: [700, 243],
+                          // data: [700, 243],
+                          data: display_facture_price_C_5 (),
                         },
                       ],
                     }}
@@ -317,7 +368,7 @@ export default function SecondPage() {
                         stroke: '#ffa726',
                       },
                     }}
-                    // bezier
+                    bezier
                     style={{
                       marginVertical: 8,
                       borderRadius: 16,
@@ -380,9 +431,32 @@ const styles = StyleSheet.create({
 
     borderRadius: 30,
   },
+  pie2: {
+    marginTop: '9%',
+    marginBottom: '16%',
+    height: 230,
+    // backgroundColor: "#D9D7D8",
+    backgroundColor: '#EAE9F2',
+    shadowColor: '#000',
+    shadowOffset: {width: 1, height: 1},
+    shadowOpacity: 0.4,
+    shadowRadius: 3,
+    elevation: 10,
+
+    borderRadius: 30,
+  },
   lineChart: {
     marginTop: '7%',
     marginBottom: '10%',
+    shadowColor: '#000',
+    shadowOffset: {width: 1, height: 1},
+    shadowOpacity: 0.4,
+    shadowRadius: 3,
+    borderRadius: 30,
+  },
+  lineChart2: {
+    marginTop: '7%',
+    marginBottom: '15%',
     shadowColor: '#000',
     shadowOffset: {width: 1, height: 1},
     shadowOpacity: 0.4,
