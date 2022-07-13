@@ -11,6 +11,7 @@ import {
 } from 'react-native';
 import {PieChart, LineChart} from 'react-native-chart-kit';
 import SwitchSelector from 'react-native-switch-selector';
+import ClientList from '../component/ClientList';
 import axios from 'axios';
 export default function SecondPage() {
   const [data, setData] = useState([]);
@@ -99,7 +100,6 @@ export default function SecondPage() {
   };
   useEffect(() => {
     getFacture();
-    console.log('<<===>>', display_facture_price_CO_1());
   }, []);
 
   const display_facture_name_CO_1 = () => {
@@ -146,10 +146,7 @@ export default function SecondPage() {
     <>
       <StatusBar backgroundColor="#2A558C" barStyle="dark-content" />
       <View style={styles.body}>
-        <View
-          // colors={['#192f6a', '#4c669f']}
-          // colors={['#057894', '#2490c2']}
-          style={styles.topSection}>
+        <View style={styles.topSection}>
           <Text
             style={{
               color: '#F2E2C4',
@@ -161,6 +158,26 @@ export default function SecondPage() {
           </Text>
         </View>
         <ScrollView>
+          <View style={styles.scrollHorizontal}>
+            <Text
+              style={{
+                color: 'black',
+                fontSize: 20,
+                marginLeft: 20,
+              }}>
+              {/* {data.map(n=>{
+                return Object.values(n.PROPERTY_151)[0]
+               }).filter((v, i, a) => a.indexOf(v) === i)} */}
+              tous les factures
+            </Text>
+            <ScrollView horizontal={true}>
+              <View style={styles.allfacture}>
+                {data.map((e, i) => (
+                  <ClientList key={i} data={e} />
+                ))}
+              </View>
+            </ScrollView>
+          </View>
           <Text
             style={{
               color: 'black',
@@ -172,6 +189,7 @@ export default function SecondPage() {
             Voici la somme des factures par clients,{'\n'} par état et par année
             de facturation
           </Text>
+
           <View>
             <Text
               style={{
@@ -277,6 +295,7 @@ export default function SecondPage() {
                 </View>
               )}
             </View>
+
             <Text
               style={{
                 fontSize: 15,
@@ -342,7 +361,7 @@ export default function SecondPage() {
                       datasets: [
                         {
                           // data: [700, 243],
-                          data: display_facture_price_C_5 (),
+                          data: display_facture_price_C_5(),
                         },
                       ],
                     }}
@@ -409,6 +428,17 @@ const styles = StyleSheet.create({
     height: '70%',
 
     // backgroundColor: 'white',
+  },
+  scrollHorizontal: {
+    marginTop: '5%',
+    marginBottom: '5%',
+  },
+  allfacture: {
+    flex: 1,
+    flexDirection: 'row',
+    marginTop: '3%',
+    marginLeft: 20,
+    marginBottom:'2%'
   },
   sousTitre: {
     fontWeight: 'bold',

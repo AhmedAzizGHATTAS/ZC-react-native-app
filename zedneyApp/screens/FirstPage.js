@@ -39,7 +39,6 @@ export default function FirstPage() {
   };
   useEffect(() => {
     getFacture();
-   console.log("<==>",displayPrice());
  }, []);
 
   const displayName = () => data.map(item => item.NAME);
