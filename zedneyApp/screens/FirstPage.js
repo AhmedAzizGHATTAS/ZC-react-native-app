@@ -6,12 +6,14 @@ import {
   StyleSheet,
   ScrollView,
   Dimensions,
+  Image
 } from 'react-native';
 import {LineChart} from 'react-native-chart-kit';
 import axios from 'axios';
 export default function FirstPage() {
   const [isLoading, setLoading] = useState(false);
   const [data, setData] = useState([]);
+  const img = 'https://images.pexels.com/photos/7130497/pexels-photo-7130497.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'
 
   // const getFacture = () => {
   //   axios
@@ -57,6 +59,7 @@ export default function FirstPage() {
     <>
      <StatusBar backgroundColor="#2A558C" barStyle="dark-content" />
       <View style={styles.body}>
+      <Image source={{uri:img}} style={StyleSheet.absoluteFillObject} blurRadius={80} />
         <View /*colors={['#057894', '#2490c2']}*/ style={styles.topSection}>
           <Text
             style={{

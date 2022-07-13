@@ -6,6 +6,7 @@ import {
   StyleSheet,
   Dimensions,
   ScrollView,
+  Image,
   ActivityIndicator,
   FlatList,
 } from 'react-native';
@@ -17,7 +18,7 @@ export default function SecondPage() {
   const [data, setData] = useState([]);
   const [showHideC1, setShowHideC1] = useState(false);
   const [showHideC2, setShowHideC2] = useState(false);
-
+const img = 'https://images.pexels.com/photos/7130497/pexels-photo-7130497.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'
   const filter_regleé_facture_for_CO_1 = () => {
     //the functions for the pie chart
     return data.filter(CO_1 => {
@@ -146,6 +147,7 @@ export default function SecondPage() {
     <>
       <StatusBar backgroundColor="#2A558C" barStyle="dark-content" />
       <View style={styles.body}>
+        <Image source={{uri:img}} style={StyleSheet.absoluteFillObject} blurRadius={300}/>
         <View style={styles.topSection}>
           <Text
             style={{
@@ -170,7 +172,7 @@ export default function SecondPage() {
                }).filter((v, i, a) => a.indexOf(v) === i)} */}
               tous les factures
             </Text>
-            <ScrollView horizontal={true}>
+            <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
               <View style={styles.allfacture}>
                 {data.map((e, i) => (
                   <ClientList key={i} data={e} />
@@ -295,7 +297,7 @@ export default function SecondPage() {
                 </View>
               )}
             </View>
-
+{/* 
             <Text
               style={{
                 fontSize: 15,
@@ -395,7 +397,7 @@ export default function SecondPage() {
                   />
                 </View>
               )}
-            </View>
+            </View> */}
           </View>
         </ScrollView>
       </View>
@@ -437,7 +439,6 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'row',
     marginTop: '3%',
-    marginLeft: 20,
     marginBottom:'2%'
   },
   sousTitre: {
