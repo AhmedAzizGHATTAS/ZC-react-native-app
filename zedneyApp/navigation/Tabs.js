@@ -2,7 +2,7 @@ import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import FirstPage from "../screens/FirstPage";
 import SecondPage from "../screens/SecondPage";
-import Logout from "../screens/Logout";
+
 import Ionicons from 'react-native-vector-icons/Ionicons';
 const Tab = createBottomTabNavigator();
 const Tabs = () => {
@@ -13,7 +13,7 @@ const Tabs = () => {
         headerShown: false,
         //we set the tabBarShowLabel false to hide the name under the icon 
         tabBarShowLabel: false,
-        tabBarStyle: {backgroundColor: 'white',borderRadius:30,width:'85%',left:"8%",bottom:'2%',position:'absolute'},
+        tabBarStyle: {backgroundColor: 'white',borderRadius:30,width:'70%',left:"17%",bottom:'2%',position:'absolute'},
         tabBarInactiveTintColor: 'black',
         tabBarActiveTintColor: '#2A558C',
       }}>
@@ -38,18 +38,6 @@ const Tabs = () => {
           ),
         })}
       /> 
-        <Tab.Screen
-        name="logoutS"
-        component={Logout}
-        options={({route}) => ({
-          
-          tabBarIcon: ({color, size}) => (
-            <Ionicons name="log-out-outline" color={color} size={size} />
-          ),
-        })}
-      /> 
-      
-      
     </Tab.Navigator>
   );
 };

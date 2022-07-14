@@ -6,9 +6,11 @@ import {
   StyleSheet,
   ScrollView,
   Dimensions,
-  Image
+  Image,
+  SafeAreaView
 } from 'react-native';
 import {LineChart} from 'react-native-chart-kit';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 import axios from 'axios';
 export default function FirstPage() {
   const [isLoading, setLoading] = useState(false);
@@ -57,27 +59,39 @@ export default function FirstPage() {
  
   return (
     <>
+     <SafeAreaView style={{ flex: 1, backgroundColor: 'white' }}>
      <StatusBar backgroundColor="#2A558C" barStyle="dark-content" />
       <View style={styles.body}>
       <Image source={{uri:img}} style={StyleSheet.absoluteFillObject} blurRadius={80} />
-        <View /*colors={['#057894', '#2490c2']}*/ style={styles.topSection}>
+        <View style={styles.topSection}>
+        <Ionicons style={{top:'-14%',right:'43%'}} name="list-outline" color={'white'} size={28} />
           <Text
             style={{
               color: '#F2E2C4',
               fontSize: 40,
-              marginTop: 10,
-              marginBottom: 30,
+              right:'29%',
+              top:'-10%'
             }}>
-            2ème interface
+            Zedney
+          </Text>
+          <Text
+            style={{
+              color: '#F2E2C4',
+              fontSize: 40,
+              right:'20%',
+              top:'-10%'
+            }}>
+            App mobile
           </Text>
         </View>
         <ScrollView>
           <View>
             <Text
               style={{
-                color: '#06080D',
-                fontSize: 20,
-                marginLeft: 20,
+                color: '#2A558C',
+                fontSize: 23,
+                fontWeight:'bold',
+                marginLeft: 10,
                 marginTop: 20,
                 marginBottom: 20,
               }}>
@@ -136,6 +150,7 @@ export default function FirstPage() {
           </View>
         </ScrollView>
       </View>
+      </SafeAreaView>
     </>
   );
 }
@@ -145,9 +160,9 @@ const styles = StyleSheet.create({
     backgroundColor: '#2A558C',
     alignItems: 'center',
     justifyContent: 'center',
-    height: '20%',
+    height: '25%',
+    // borderBottomRightRadius: 30,
     borderBottomLeftRadius: 30,
-    borderBottomRightRadius: 30,
     shadowColor: '#000',
     shadowOffset: {width: 3, height: 3},
     shadowOpacity: 0.4,
@@ -182,8 +197,9 @@ const styles = StyleSheet.create({
     marginLeft: 10,
   },
   aboutTitle: {
-    color: '#06080D',
-    fontSize: 20,
+    color: '#2A558C',
+    fontSize: 23,
+    fontWeight:'bold',
     marginBottom: 10,
     marginTop: -10,
   },

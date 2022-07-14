@@ -38,7 +38,7 @@ const styles = StyleSheet.create({
     flex: 1,
     // margin: 5,
     marginLeft:20,
-    width: 150,
+    width: 170,
     height: 150,
     backgroundColor: '#EAE9F2',
     shadowColor: '#000',
@@ -46,6 +46,6 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.4,
     shadowRadius: 3,
     elevation: 10,
-    borderRadius: 30,
+    borderRadius: 10,
   },
 });
