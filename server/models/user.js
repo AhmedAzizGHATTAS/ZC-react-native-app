@@ -15,15 +15,15 @@ userSchema.pre("save", function (next) {
     });
   }
 });
-// userSchema.methods.comparePassword= async function(motDePasse){
-//   if(!motDePasse) throw new Error('mot de passe missing')
-//   try{
-//     const result=await bcrypt.compare(motDePasse,this.motDePasse)
-//     return result
-//   }catch (error){
-//    console.log('error while comparing password',error);
-//   }
-// }
+userSchema.methods.comparePassword= async function(motDePasse){
+  if(!motDePasse) throw new Error('mot de passe missing')
+  try{
+    const result=await bcrypt.compare(motDePasse,this.motDePasse)
+    return result
+  }catch (error){
+   console.log('error while comparing password',error);
+  }
+}
 
 userSchema.statics.existEmail = async function (email) {
   if (!email) throw new Error("Invalid email");
