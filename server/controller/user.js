@@ -22,7 +22,7 @@ exports.userSignIn = async (req, res) => {
   const isMatch = await user.comparePassword(motDePasse);
   if (!isMatch)
     return res.json({ success: false, message: "check email / mot de passe" });
-  const token = jwt.sign({ userId: user._id }, "secretjwt123", {
+  const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, {
     expiresIn: "1d",
   });
   res.json({ success: true, user, token });
