@@ -7,26 +7,25 @@ import {
   Image,
   TouchableOpacity,
   TextInput,
-  ScrollView,
+  Alert,
 } from 'react-native';
-import {AuthContext} from '../component/AuthContext';
-// import Spinner from 'react-native-loading-spinner-overlay';
 import axios from 'axios';
-import Login from './login';
-
 export default function Register({navigation}) {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [motDePasse, setMotDePasse] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const register = () => {
-    const userData = {name:name,email:email,motDePasse:motDePasse}
+    const userData = {name: name, email: email, motDePasse: motDePasse};
     setIsLoading(true);
     axios
-      .post(`http://192.168.1.22:4200/register`, userData)
-      .then((response)=>{
-        console.log("response.data",response.data);
-        navigation.navigate("Login")
+      .post(`http://192.168.1.41:4200/register`, userData)
+      .then(response => {
+        if (response.data.success) {
+          navigation.navigate('Login');
+        } else {
+          Alert.alert(response.data.message);
+        }
       })
       .catch(e => {
         console.log(`register error ==> ${e}`);
@@ -34,22 +33,20 @@ export default function Register({navigation}) {
         setIsLoading(false);
       });
   };
-  const haveAccount =()=>{
-    navigation.navigate('Login')
-    setIsLoading(false)
-  }
+  const haveAccount = () => {
+    navigation.navigate('Login');
+    setIsLoading(false);
+  };
 
   return (
     <>
       <StatusBar backgroundColor="white" barStyle="dark-content" />
-      {/* <Spinner visible={isLoading} /> */}
       <View style={styles.body}>
         <View style={styles.topSection}>
           <Image source={require('../assets/zedneylogo.jpg')} />
         </View>
 
         <View
-          // colors={['#192f6a', '#4c669f']}
           style={styles.bottomSection}
           contentContainerStyle={{flexGrow: 1, justifyContent: 'center'}}>
           <View
@@ -68,7 +65,7 @@ export default function Register({navigation}) {
                 }}>
                 Creé votre{'\n'}compte
               </Text>
-              
+
               <TextInput
                 style={{
                   height: 52,
@@ -84,7 +81,6 @@ export default function Register({navigation}) {
                 placeholder="Votre nom"
                 onChangeText={text => {
                   setName(text);
-                  console.log(text);
                 }}
               />
               <TextInput
@@ -103,7 +99,6 @@ export default function Register({navigation}) {
                 placeholder="Adresse e-mail"
                 onChangeText={text => {
                   setEmail(text);
-                  console.log(text);
                 }}
               />
 
@@ -140,7 +135,6 @@ export default function Register({navigation}) {
                 style={[
                   styles.textSign,
                   {
-                    
                     color: '#F2D22E',
                     paddingTop: '5%',
                   },
@@ -148,16 +142,13 @@ export default function Register({navigation}) {
                 S’inscrire
               </Text>
             </TouchableOpacity>
-            <TouchableOpacity 
-            onPress={() => haveAccount()}>
+            <TouchableOpacity onPress={() => haveAccount()}>
               <Text
                 style={{
                   marginTop: 20,
-                  color: "#F2D22E",
-                  textDecorationLine: "underline",
-                }}
-                
-              >
+                  color: '#F2D22E',
+                  textDecorationLine: 'underline',
+                }}>
                 J'ai déjà un compte
               </Text>
             </TouchableOpacity>

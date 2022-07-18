@@ -36,8 +36,7 @@ export default ClientList;
 const styles = StyleSheet.create({
   clientCard: {
     flex: 1,
-    // margin: 5,
-    marginLeft:20,
+    marginLeft: 20,
     width: 170,
     height: 150,
     backgroundColor: '#EAE9F2',

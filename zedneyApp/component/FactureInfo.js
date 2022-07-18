@@ -48,9 +48,6 @@ const styles = StyleSheet.create({
   cardLocation: {
     fontSize: 11.5,
     color: "#777",
-    // marginLeft: 10,
-    // top:'8%'
-    
   },
   cardDescription: {
     fontSize: 12,
